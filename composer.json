@@ -1,0 +1,29 @@
+{
+    "name": "xxutianyi/php-wework-sdk",
+    "description": "WeWork SDK for PHP",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "xXutianyi\\PhpWeworkSdk\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "徐添翼 XuTianyi",
+            "email": "xutianyi12@outlook.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=8.2",
+        "symfony/cache": "^6.2",
+        "guzzlehttp/guzzle": "^7.5"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.tencent.com/composer/"
+        }
+    }
+}

@@ -1,0 +1,36 @@
+<?php
+/*
+ * Copyright (c) XuTianyi 2023.
+ * Email: xutianyi12@outlook.com.
+ * Github: https://github.com/xxutianyi
+ */
+
+namespace xXutianyi\PhpWeworkSdk\ErrorCode;
+
+enum RemoteError: int
+{
+
+    case REMOTE_SYSTEM_BUSY = -1;
+    case REMOTE_SUCCESS = 0;
+    case REMOTE_OPERATION_CONFLICT = 6000;
+    case REMOTE_SECRET_ERROR = 40001;
+    case REMOTE_USERID_ERROR = 40002;
+    case REMOTE_INVALID_MEDIA_TYPE = 40004;
+    case REMOTE_INVALID_TYPE_PARAM = 40005;
+    case REMOTE_INVALID_FILE_SIZE = 40006;
+    case REMOTE_INVALID_MEDIA_ID = 40007;
+    case REMOTE_INVALID_MSG_TYPE = 40008;
+    case REMOTE_INVALID_IMAGE_SIZE = 40009;
+    case REMOTE_INVALID_VIDEO_SIZE = 40011;
+    case REMOTE_INVALID_CORP_ID = 40013;
+    case REMOTE_INVALID_ACCESS_TOKEN = 40014;
+    case REMOTE_INVALID_BUTTON_COUNT = 40016;
+    case REMOTE_INVALID_BUTTON_TYPE = 40017;
+    case REMOTE_INVALID_BUTTON_NAME_LENGTH = 40018;
+    case REMOTE_INVALID_BUTTON_KEY_LENGTH = 40019;
+    case REMOTE_INVALID_BUTTON_URL_LENGTH = 40020;
+    case REMOTE_INVALID_SUB_MENU_LEVEL = 40022;
+    case REMOTE_INVALID_SUB_MENU_COUNT = 40023;
+
+    //TODO:补充全局错误码;
+}
