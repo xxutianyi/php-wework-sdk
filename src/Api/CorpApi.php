@@ -8,10 +8,6 @@
 namespace xXutianyi\PhpWeworkSdk\Api;
 
 use GuzzleHttp\Exception\GuzzleException;
-use JetBrains\PhpStorm\ArrayShape;
-use xXutianyi\PhpWeworkSdk\Enum\BuiltinApp;
-use xXutianyi\PhpWeworkSdk\Enum\Endpoint;
-use xXutianyi\PhpWeworkSdk\Enum\HttpMethod;
 use xXutianyi\PhpWeworkSdk\ErrorCode\ClientError;
 use xXutianyi\PhpWeworkSdk\Exception\CallException;
 
