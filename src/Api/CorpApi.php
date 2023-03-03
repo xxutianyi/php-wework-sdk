@@ -211,7 +211,9 @@ class CorpApi extends Api
             'totag' => $tags,
             'msgtype' => 'text',
             'agentid' => $this->agentID,
-            'text' => $content,
+            'text' => [
+                'content' => $content
+            ],
             'safe' => $safe,
         ];
 

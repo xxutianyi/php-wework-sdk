@@ -32,5 +32,7 @@ enum RemoteError: int
     case REMOTE_INVALID_SUB_MENU_LEVEL = 40022;
     case REMOTE_INVALID_SUB_MENU_COUNT = 40023;
 
+    case REMOTE_INVALID_PARAMS = 40058;
+
     //TODO:补充全局错误码;
 }
