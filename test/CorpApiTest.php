@@ -8,8 +8,8 @@
 namespace xXutianyi\PhpWeworkSdk\Tests;
 
 use PHPUnit\Framework\TestCase;
+use PHPWeworkSDK\Api\CorpApi;
 use Symfony\Component\Dotenv\Dotenv;
-use xXutianyi\PhpWeworkSdk\Api\CorpApi;
 
 class CorpApiTest extends TestCase
 {
