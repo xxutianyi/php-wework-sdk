@@ -5,7 +5,7 @@
  * Github: https://github.com/xxutianyi
  */
 
-namespace xXutianyi\PhpWeworkSdk\Tests;
+namespace PHPWeWorkSDK\Tests;
 
 use PHPUnit\Framework\TestCase;
 use PHPWeworkSDK\Api\CorpApi;

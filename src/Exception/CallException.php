@@ -12,15 +12,10 @@ use PHPWeworkSDK\ErrorCode\ClientError;
 
 class CallException extends Exception
 {
-    public function __construct(string $message = "", int $code = null, Exception $previous = null)
+    public function __construct(ClientError $error = null, Exception $previous = null)
     {
-        if (empty($message)) {
-            $message = ClientError::API_PARAMS_ERROR->name;
-        }
-
-        if (empty($code)) {
-            $code = ClientError::API_PARAMS_ERROR->value;
-        }
+        $message = "Call SDK Error: " . ($error ? $error->name : "Unknown Error");
+        $code = $error ? $error->value : -1;
 
         parent::__construct($message, $code, $previous);
     }

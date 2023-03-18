@@ -8,6 +8,7 @@
 namespace PHPWeworkSDK\Api;
 
 use GuzzleHttp\Exception\GuzzleException;
+use PHPWeworkSDK\Abstract\Api;
 use PHPWeworkSDK\ErrorCode\ClientError;
 use PHPWeworkSDK\Exception\CallException;
 
@@ -33,16 +34,16 @@ class CorpApi extends Api
         parent::__construct();
 
         if (empty($corpID)) {
-            throw new CallException(ClientError::CROP_ID_PARAM_ERROR->name, ClientError::CROP_ID_PARAM_ERROR->value);
+            throw new CallException(ClientError::CROP_ID_PARAM_ERROR);
         }
 
         if (empty($secret)) {
-            throw new CallException(ClientError::SECRET_PARAM_ERROR->name, ClientError::SECRET_PARAM_ERROR->value);
+            throw new CallException(ClientError::SECRET_PARAM_ERROR);
         }
 
 
         if (empty($agentID) || (is_string($agentID) && !in_array($agentID, $this->builtinApp))) {
-            throw new CallException(ClientError::AGENT_ID_PARAM_ERROR->name, ClientError::AGENT_ID_PARAM_ERROR->value);
+            throw new CallException(ClientError::AGENT_ID_PARAM_ERROR);
         }
 
         $this->corpID = $corpID;
@@ -99,7 +100,7 @@ class CorpApi extends Api
     {
 
         if (is_string($this->agentID)) {
-            throw new CallException('Invalid AgentID');
+            throw new CallException(ClientError::AGENT_ID_PARAM_ERROR);
         }
 
         $allowedType = [
@@ -108,7 +109,7 @@ class CorpApi extends Api
         ];
 
         if (!in_array($type, $allowedType)) {
-            throw new CallException('Invalid Type');
+            throw new CallException(ClientError::API_PARAMS_ERROR);
         }
 
         return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$this->corpID&redirect_uri=$redirectUrl&response_type=code&scope=$type&state=$state&agentid=$this->agentID#wechat_redirect";
@@ -190,11 +191,11 @@ class CorpApi extends Api
     public function sendTextMessage(string $content, array $users = [], array $tags = [], array $parties = [], int $safe = 0): array
     {
         if (is_string($this->agentID)) {
-            throw new CallException('Invalid AgentID');
+            throw new CallException(ClientError::AGENT_ID_PARAM_ERROR);
         }
 
         if (empty($users) && empty($tags) && empty($parties)) {
-            throw new CallException('Users,Tags,Parties 不能同时为空！');
+            throw new CallException(ClientError::API_PARAMS_ERROR);
         }
 
         $users = implode("|", $users);

@@ -5,14 +5,14 @@
  * Github: https://github.com/xxutianyi
  */
 
-namespace PHPWeworkSDK\Api;
+namespace PHPWeworkSDK\Abstract;
 
 use GuzzleHttp\Exception\GuzzleException;
-use SimpleRequest\Request;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use PHPWeworkSDK\ErrorCode\RemoteError;
 use PHPWeworkSDK\Exception\CallException;
 use PHPWeworkSDK\Exception\RemoteException;
+use SimpleRequest\Request;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 abstract class Api
 {
