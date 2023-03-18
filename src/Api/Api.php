@@ -5,14 +5,14 @@
  * Github: https://github.com/xxutianyi
  */
 
-namespace xXutianyi\PhpWeworkSdk\Api;
+namespace PHPWeworkSDK\Api;
 
 use GuzzleHttp\Exception\GuzzleException;
+use SimpleRequest\Request;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use xXutianyi\PhpWeworkSdk\ErrorCode\RemoteError;
-use xXutianyi\PhpWeworkSdk\Exception\CallException;
-use xXutianyi\PhpWeworkSdk\Exception\RemoteException;
-use xXutianyi\PhpWeworkSdk\Utils\Request;
+use PHPWeworkSDK\ErrorCode\RemoteError;
+use PHPWeworkSDK\Exception\CallException;
+use PHPWeworkSDK\Exception\RemoteException;
 
 abstract class Api
 {
@@ -80,11 +80,10 @@ abstract class Api
         if (key_exists('errcode', $response)) {
             $errorCode = (int)$response['errcode'];
             if ($errorCode) {
-                $error = RemoteError::from($errorCode);
-                throw new RemoteException($error->name, $error->value);
+                throw new RemoteException(RemoteError::tryFrom($errorCode));
             }
         } else {
-            throw new RemoteException('RemoteError Response Error:' . json_encode($response));
+            throw new RemoteException();
         }
     }
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a3edb8e6803dd227f67ccd3ea19ceed",
+    "content-hash": "b8b1244a32fb257d644f4ac3739171da",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -841,6 +841,53 @@
                 "serialize"
             ],
             "time": "2023-02-24T10:42:00+00:00"
+        },
+        {
+            "name": "xxutianyi/php-simple-request",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xxutianyi/php-simple-request.git",
+                "reference": "a0acb834aff6e76eee5af5d2aa08537adb8512b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xxutianyi/php-simple-request/zipball/a0acb834aff6e76eee5af5d2aa08537adb8512b0",
+                "reference": "a0acb834aff6e76eee5af5d2aa08537adb8512b0",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.5",
+                "php": ">=8.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SimpleRequest\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "徐添翼 XuTianyi",
+                    "email": "xutianyi12@outlook.com"
+                }
+            ],
+            "description": "Packaged Http Json Request Library use Guzzlehttp",
+            "support": {
+                "issues": "https://github.com/xxutianyi/php-simple-request/issues",
+                "source": "https://github.com/xxutianyi/php-simple-request/tree/v1.0.0"
+            },
+            "time": "2023-03-18T12:26:50+00:00"
         }
     ],
     "packages-dev": [

@@ -5,10 +5,10 @@
  * Github: https://github.com/xxutianyi
  */
 
-namespace xXutianyi\PhpWeworkSdk\Exception;
+namespace PHPWeworkSDK\Exception;
 
 use Exception;
-use xXutianyi\PhpWeworkSdk\ErrorCode\ClientError;
+use PHPWeworkSDK\ErrorCode\ClientError;
 
 class CallException extends Exception
 {

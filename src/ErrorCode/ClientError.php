@@ -5,7 +5,7 @@
  * Github: https://github.com/xxutianyi
  */
 
-namespace xXutianyi\PhpWeworkSdk\ErrorCode;
+namespace PHPWeworkSDK\ErrorCode;
 
 enum ClientError: int
 {

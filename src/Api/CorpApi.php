@@ -5,11 +5,11 @@
  * Github: https://github.com/xxutianyi
  */
 
-namespace xXutianyi\PhpWeworkSdk\Api;
+namespace PHPWeworkSDK\Api;
 
 use GuzzleHttp\Exception\GuzzleException;
-use xXutianyi\PhpWeworkSdk\ErrorCode\ClientError;
-use xXutianyi\PhpWeworkSdk\Exception\CallException;
+use PHPWeworkSDK\ErrorCode\ClientError;
+use PHPWeworkSDK\Exception\CallException;
 
 class CorpApi extends Api
 {
