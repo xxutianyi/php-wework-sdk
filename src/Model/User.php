@@ -11,4 +11,8 @@ class User extends BaseModel
         'name',
         'department',
     ];
+
+    protected array $fullAttributes = [
+
+    ];
 }

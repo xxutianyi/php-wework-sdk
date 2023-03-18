@@ -15,9 +15,14 @@ abstract class BaseModel
      */
     protected function checkRequiredAttribute(array $modelArray): void
     {
-        foreach ($this->requiredAttributes as $value) {
-            if (!key_exists($value, $modelArray))
-                throw new CallException(ClientError::API_PARAMS_ERROR);
+        foreach ($this->requiredAttributes as $key) {
+            if (!key_exists($key, $modelArray))
+                throw new CallException(ClientError::MODEL_TO_FEW_ATTRIBUTES);
+        }
+
+        foreach ($modelArray as $key => $value) {
+            if (!key_exists($key, $this->fullAttributes))
+                throw new CallException(ClientError::MODEL_TO_MANY_ATTRIBUTES);
         }
     }
 
