@@ -105,6 +105,12 @@ class CorpApi extends Api
 
     }
 
+    /*
+     * ------------------------------------------------
+     * 身份认证接口
+     * ------------------------------------------------
+     */
+
     /**
      * 生成 oauth 授权链接
      * @param string $redirectUrl
@@ -144,7 +150,6 @@ class CorpApi extends Api
     public function getUserInfoWithCode($code): array
     {
         $query = [
-            'access_token' => $this->accessToken,
             'code' => $code
         ];
 
@@ -182,18 +187,64 @@ class CorpApi extends Api
      */
     public function getUserDetailWithTicket($ticket): User
     {
-        $query = [
-            'access_token' => $this->accessToken,
-        ];
-
         $params = [
             'user_ticket' => $ticket
         ];
 
-        $response = $this->request(Endpoint::InnerGetUserPrivateInfo, 'POST', $query, $params);
+        $response = $this->request(Endpoint::InnerGetUserPrivateInfo, 'POST', [], $params);
 
         return new User($response);
 
+    }
+
+    /*
+     * ------------------------------------------------
+     * 通讯录管理接口
+     * ------------------------------------------------
+     */
+
+    /**
+     * 创建用户
+     * @param User $user
+     * @return bool
+     * @throws CallException
+     * @throws GuzzleException
+     * @throws RemoteException
+     */
+    public function createUser(User $user): bool
+    {
+        $this->request(Endpoint::InnerCreateUser, 'POST', [], $user->toArray());
+
+        return true;
+    }
+
+    /**
+     * 更新用户
+     * @param User $user
+     * @return bool
+     * @throws CallException
+     * @throws GuzzleException
+     * @throws RemoteException
+     */
+    public function updateUser(User $user): bool
+    {
+        $this->request(Endpoint::InnerUpdateUser, 'POST', [], $user->toArray());
+
+        return true;
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     * @throws CallException
+     * @throws GuzzleException
+     * @throws RemoteException
+     */
+    public function deleteUser(User $user): bool
+    {
+        $this->request(Endpoint::InnerDeleteUser, 'GET', ['user_id' => $user->user_id]);
+
+        return true;
     }
 
     /**
