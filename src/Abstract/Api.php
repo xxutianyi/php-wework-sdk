@@ -41,8 +41,10 @@ abstract class Api
      * @param array $query
      * @param array $params
      * @param string $accessToken
-     * @return string
+     * @return array
+     * @throws CallException
      * @throws GuzzleException
+     * @throws RemoteException
      */
     public function request(string $endpoint, string $method, array $query = [], array $params = [], string $accessToken = ""): array
     {
@@ -54,7 +56,7 @@ abstract class Api
         } elseif ($method == "POST") {
             $response = Request::post($url, $query, $params, [], $headers);
         } else {
-            throw new CallException('Method Not Allowed');
+            throw new CallException();
         }
 
         $response = json_decode($response->getContents(), true);
