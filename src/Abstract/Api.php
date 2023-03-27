@@ -8,6 +8,7 @@
 namespace PHPWeworkSDK\Abstract;
 
 use GuzzleHttp\Exception\GuzzleException;
+use PHPWeworkSDK\Api\Endpoint;
 use PHPWeworkSDK\ErrorCode\RemoteError;
 use PHPWeworkSDK\Exception\CallException;
 use PHPWeworkSDK\Exception\RemoteException;
@@ -29,6 +30,7 @@ abstract class Api
 
     protected string $cacheKeyPrefix = "php_wework_sdk.xxutianyi.access_token.";
     protected string $cacheItemKey;
+    protected string $accessToken;
 
     public function __construct()
     {
@@ -36,20 +38,24 @@ abstract class Api
     }
 
     /**
-     * @param string $endpoint
+     * @param Endpoint $endpoint
      * @param string $method
      * @param array $query
      * @param array $params
-     * @param string $accessToken
+     * @param bool $auth
      * @return array
      * @throws CallException
      * @throws GuzzleException
      * @throws RemoteException
      */
-    public function request(string $endpoint, string $method, array $query = [], array $params = [], string $accessToken = ""): array
+    protected function request(Endpoint $endpoint, string $method, array $query = [], array $params = [], bool $auth = true): array
     {
         $url = $this->makeUrl($endpoint);
         $headers = [];
+
+        if ($auth) {
+            $query[] = ['access_token' => $this->accessToken];
+        }
 
         if ($method == "GET") {
             $response = Request::get($url, $query, $headers);

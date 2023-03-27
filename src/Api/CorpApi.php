@@ -11,23 +11,25 @@ use GuzzleHttp\Exception\GuzzleException;
 use PHPWeworkSDK\Abstract\Api;
 use PHPWeworkSDK\ErrorCode\ClientError;
 use PHPWeworkSDK\Exception\CallException;
+use PHPWeworkSDK\Exception\RemoteException;
+use PHPWeworkSDK\Model\User;
+use Psr\Cache\InvalidArgumentException;
 
 class CorpApi extends Api
 {
 
     private string $corpID = "";
     private string $secret = "";
-
     private string|int $agentID = "";
-
-    private string $accessToken = "";
-
 
     /**
      * @param int|string $agentID 企业微信自建应用 Agent ID 或内置应用 CONTACT,DAIL,CHECKIN,MEETING_ROOM,KF
      * @param string $corpID 企业微信企业 ID
      * @param string $secret 应用 secret 或内置功能 secret
      * @throws CallException
+     * @throws GuzzleException
+     * @throws RemoteException
+     * @throws InvalidArgumentException
      */
     public function __construct(int|string $agentID, string $corpID, string $secret)
     {
@@ -57,6 +59,14 @@ class CorpApi extends Api
 
     }
 
+    /**
+     * 获取AccessToken, 自动维护缓存
+     * @return string
+     * @throws CallException
+     * @throws GuzzleException
+     * @throws RemoteException
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
     protected function getAccessToken(): string
     {
         $accessToken = $this->cache->getItem($this->cacheItemKey);
@@ -64,9 +74,16 @@ class CorpApi extends Api
             return $this->refreshAccessToken();
         }
         return $accessToken->get();
-
     }
 
+    /**
+     * 刷新 AccessToken
+     * @return string
+     * @throws CallException
+     * @throws GuzzleException
+     * @throws RemoteException
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
     protected function refreshAccessToken(): string
     {
         $query = [
@@ -74,7 +91,7 @@ class CorpApi extends Api
             'corpsecret' => $this->secret
         ];
 
-        $response = $this->request('/gettoken', 'GET', $query);
+        $response = $this->request(Endpoint::InnerGetAccessToken, 'GET', $query, [], false);
 
         $accessToken = $response['access_token'];
         $expiresIn = $response['expires_in'];
@@ -91,7 +108,7 @@ class CorpApi extends Api
     /**
      * 生成 oauth 授权链接
      * @param string $redirectUrl
-     * @param string $type
+     * @param string $type 'snsapi_base' 或 'snsapi_privateinfo'
      * @param string $state
      * @return string
      * @throws CallException
@@ -117,10 +134,12 @@ class CorpApi extends Api
     }
 
     /**
-     * oauth code 换用户信息
+     * oAuth code 换用户信息
      * @param $code
      * @return array 返回type参数，0 外部成员，1 内部成员带敏感信息， 2 内部成员不含敏感信息
+     * @throws CallException
      * @throws GuzzleException
+     * @throws RemoteException
      */
     public function getUserInfoWithCode($code): array
     {
@@ -129,7 +148,7 @@ class CorpApi extends Api
             'code' => $code
         ];
 
-        $response = $this->request('/auth/getuserinfo', 'GET', $query);
+        $response = $this->request(Endpoint::InnerGetUserInfoWithCode, 'GET', $query);
 
         if (key_exists('openid', $response)) {
             return [
@@ -156,10 +175,12 @@ class CorpApi extends Api
     /**
      * user_ticket 换用户敏感信息
      * @param $ticket
-     * @return array
+     * @return User
+     * @throws CallException
      * @throws GuzzleException
+     * @throws RemoteException
      */
-    public function getUserDetailWithTicket($ticket): array
+    public function getUserDetailWithTicket($ticket): User
     {
         $query = [
             'access_token' => $this->accessToken,
@@ -169,11 +190,9 @@ class CorpApi extends Api
             'user_ticket' => $ticket
         ];
 
-        $response = $this->request('/auth/getuserdetail', 'POST', $query, $params);
+        $response = $this->request(Endpoint::InnerGetUserPrivateInfo, 'POST', $query, $params);
 
-        //TODO:整理返回值
-
-        return $response;
+        return new User($response);
 
     }
 
@@ -186,7 +205,7 @@ class CorpApi extends Api
      * @param int $safe
      * @return array
      * @throws CallException
-     * @throws GuzzleException
+     * @throws GuzzleException|RemoteException
      */
     public function sendTextMessage(string $content, array $users = [], array $tags = [], array $parties = [], int $safe = 0): array
     {
@@ -218,7 +237,7 @@ class CorpApi extends Api
             'safe' => $safe,
         ];
 
-        $response = $this->request('/message/send', 'POST', $query, $params);
+        $response = $this->request(Endpoint::InnerSendMessage, 'POST', $query, $params);
 
         //TODO:整理返回值
 
