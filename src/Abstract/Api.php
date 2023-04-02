@@ -73,9 +73,9 @@ abstract class Api
 
     }
 
-    private function makeUrl($endpoint): string
+    private function makeUrl(Endpoint $endpoint): string
     {
-        return self::BASE_URL . $endpoint;
+        return self::BASE_URL . $endpoint->value;
     }
 
     /**

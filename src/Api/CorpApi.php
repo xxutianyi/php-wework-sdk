@@ -67,7 +67,7 @@ class CorpApi extends Api
      * @throws RemoteException
      * @throws \Psr\Cache\InvalidArgumentException
      */
-    protected function getAccessToken(): string
+    public function getAccessToken(): string
     {
         $accessToken = $this->cache->getItem($this->cacheItemKey);
         if (!$accessToken->isHit()) {
@@ -140,13 +140,13 @@ class CorpApi extends Api
      * @throws GuzzleException
      * @throws RemoteException
      */
-    public function getUserInfoWithCode($code): array
+    public function getUserInfoByCode($code): array
     {
         $query = [
             'code' => $code
         ];
 
-        $response = $this->request(Endpoint::InnerGetUserInfoWithCode, 'GET', $query);
+        $response = $this->request(Endpoint::InnerGetUserInfoByCode, 'GET', $query);
 
         if (key_exists('openid', $response)) {
             return [
@@ -227,6 +227,7 @@ class CorpApi extends Api
     }
 
     /**
+     * 删除用户
      * @param User $user
      * @return bool
      * @throws CallException
@@ -238,6 +239,67 @@ class CorpApi extends Api
         $this->request(Endpoint::InnerDeleteUser, 'GET', ['user_id' => $user->user_id]);
 
         return true;
+    }
+
+    /**
+     * 批量删除用户
+     * @param array $list
+     * @return bool
+     * @throws CallException
+     * @throws GuzzleException
+     * @throws RemoteException/
+     *
+     */
+    public function batchDeleteUser(array $list): bool
+    {
+        $this->request(Endpoint::InnerBatchDeleteUser, 'POST', ['useridlist' => $list]);
+
+        return true;
+    }
+
+    /**
+     * 登陆时二次验证
+     * @param User $user
+     * @return bool
+     * @throws CallException
+     * @throws GuzzleException
+     * @throws RemoteException
+     */
+    public function twoStepAuthSuccess(User $user): bool
+    {
+        $this->request(Endpoint::InnerTwoStepAuthSuccess, 'GET', ['user_id' => $user->user_id]);
+
+        return true;
+    }
+
+    /**
+     * 手机号换 user id
+     * @param $mobile
+     * @return string|null
+     * @throws CallException
+     * @throws GuzzleException
+     * @throws RemoteException
+     */
+    public function getUserIdByMobile($mobile): string|null
+    {
+        $response = $this->request(Endpoint::InnerGetUserIdByMobile, 'POST', [], ['mobile' => $mobile]);
+
+        return $response['userid'];
+    }
+
+    /**
+     * 邮箱换 user id
+     * @param $email
+     * @return string|null
+     * @throws CallException
+     * @throws GuzzleException
+     * @throws RemoteException
+     */
+    public function getUserIdByEmail($email): string|null
+    {
+        $response = $this->request(Endpoint::InnerGetUserIdByEmail, 'POST', [], ['email' => $email]);
+
+        return $response['userid'];
     }
 
     /**
