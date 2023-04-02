@@ -4,11 +4,12 @@ namespace PHPWeworkSDK\Api;
 
 enum Endpoint: string
 {
+    /** 身份认证 */
     case InnerGetAccessToken = '/gettoken';
     case InnerGetUserInfoByCode = '/auth/getuserinfo';
     case InnerGetUserPrivateInfo = '/auth/getuserdetail';
 
-
+    /** 通讯录管理 */
     case InnerCreateUser = '/user/create';
     case InnerUpdateUser = '/user/update';
     case InnerDeleteUser = '/user/delete';
@@ -16,5 +17,7 @@ enum Endpoint: string
     case InnerTwoStepAuthSuccess = '/user/authsucc';
     case InnerGetUserIdByMobile = '/user/getuserid';
     case InnerGetUserIdByEmail = '/user/get_userid_by_email';
+
+    /** 发送消息 */
     case InnerSendMessage = '/message/send';
 }
