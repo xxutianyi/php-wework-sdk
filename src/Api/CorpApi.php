@@ -113,27 +113,20 @@ class CorpApi extends Api
 
     /**
      * 生成 oauth 授权链接
-     * @param string $redirectUrl
-     * @param string $type 'snsapi_base' 或 'snsapi_privateinfo'
-     * @param string $state
-     * @return string
+     * @param string $redirectUrl 重定向链接
+     * @param string $state 回传 state 信息
+     * @param bool $private 是否获取敏感信息，默认获取
+     * @return string 拼装好的链接
      * @throws CallException
      */
-    public function getOAuthUrl(string $redirectUrl, string $type, string $state = ""): string
+    public function getOAuthUrl(string $redirectUrl, string $state = "", bool $private = true): string
     {
 
         if (is_string($this->agentID)) {
             throw new CallException(ClientError::AGENT_ID_PARAM_ERROR);
         }
 
-        $allowedType = [
-            'snsapi_base',
-            'snsapi_privateinfo'
-        ];
-
-        if (!in_array($type, $allowedType)) {
-            throw new CallException(ClientError::API_PARAMS_ERROR);
-        }
+        $type = $private ? 'snsapi_privateinfo' : 'snsapi_base';
 
         return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$this->corpID&redirect_uri=$redirectUrl&response_type=code&scope=$type&state=$state&agentid=$this->agentID#wechat_redirect";
 
