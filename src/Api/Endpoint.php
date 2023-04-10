@@ -17,6 +17,10 @@ enum Endpoint: string
     case InnerTwoStepAuthSuccess = '/user/authsucc';
     case InnerGetUserIdByMobile = '/user/getuserid';
     case InnerGetUserIdByEmail = '/user/get_userid_by_email';
+    case InnerCreateDepartment = '/department/create';
+    case InnerUpdateDepartment = '/department/update';
+    case InnerDeleteDepartment = '/department/delete';
+    case InnerIndexDepartment = '/department/simplelist';
 
     /** 发送消息 */
     case InnerSendMessage = '/message/send';

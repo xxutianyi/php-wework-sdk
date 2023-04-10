@@ -12,6 +12,7 @@ use PHPWeworkSDK\Abstract\Api;
 use PHPWeworkSDK\ErrorCode\ClientError;
 use PHPWeworkSDK\Exception\CallException;
 use PHPWeworkSDK\Exception\RemoteException;
+use PHPWeworkSDK\Model\Department;
 use PHPWeworkSDK\Model\User;
 use Psr\Cache\InvalidArgumentException;
 
@@ -301,6 +302,73 @@ class CorpApi extends Api
 
         return $response['userid'];
     }
+
+    /**
+     * 创建部门
+     * @param Department $department
+     * @return true
+     * @throws CallException
+     * @throws GuzzleException
+     * @throws RemoteException
+     */
+    public function createDepartment(Department $department): bool
+    {
+        $this->request(Endpoint::InnerCreateDepartment, 'POST', [], $department->toArray());
+
+        return true;
+    }
+
+    /**
+     * 更新部门
+     * @param Department $department
+     * @return bool
+     * @throws CallException
+     * @throws GuzzleException
+     * @throws RemoteException
+     */
+    public function updateDepartment(Department $department): bool
+    {
+        $this->request(Endpoint::InnerUpdateDepartment, 'POST', [], $department->toArray());
+
+        return true;
+    }
+
+    /**
+     * 删除部门
+     * @param Department $department
+     * @return bool
+     * @throws CallException
+     * @throws GuzzleException
+     * @throws RemoteException
+     */
+    public function deleteDepartment(Department $department): bool
+    {
+        $this->request(Endpoint::InnerDeleteDepartment, 'GET', ['id' => $department->id]);
+
+        return true;
+    }
+
+    /**
+     * 获取部门ID列表
+     * @param Department|null $department
+     * @return array
+     * @throws CallException
+     * @throws GuzzleException
+     * @throws RemoteException
+     */
+    public function indexDepartment(Department $department = null): array
+    {
+        $response = $this->request(Endpoint::InnerIndexDepartment, 'GET', $department ? ['id' => $department->id] : []);
+
+        return $response;
+    }
+
+    
+    /*
+     * ------------------------------------------------
+     * 消息发送接口
+     * ------------------------------------------------
+     */
 
     /**
      * 发送文本消息
