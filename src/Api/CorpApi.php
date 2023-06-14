@@ -363,7 +363,7 @@ class CorpApi extends Api
         return $response;
     }
 
-    
+
     /*
      * ------------------------------------------------
      * 消息发送接口
